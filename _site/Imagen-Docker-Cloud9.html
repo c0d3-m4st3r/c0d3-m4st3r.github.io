@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="generator" content="Jekyll">
+
+  <title>Crear contenedor para implementar el IDE de Amazon, Cloud9, en nustro propio servidor</title>
+
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="ATOM Feed" /> <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Crear contenedor para implementar el IDE de Amazon, Cloud9, en nustro propio servidor | c0d3-m4st3r-blog</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Crear contenedor para implementar el IDE de Amazon, Cloud9, en nustro propio servidor" />
+<meta name="author" content="c0d3-m4st3r" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Amazon nos provee de un IDE en la nube muy completo llamado Cloud9. Con este IDE en la nube podremos trabajar codo a codo con nuestros compañeros de manera remota debido a que cada cambio que haga nuestro compañero lo veremos al instante lo que hace que sea un IDE pensado para el teletrabajo. Cloud9 es capaz de compilar y ejecutar nuestros proyectos en la nube y es compatible con numerosos lenguajes, entre los que se encuentran C, C ++, PHP, Ruby, Perl, Python, JavaScript con Node. js y Go." />
+<meta property="og:description" content="Amazon nos provee de un IDE en la nube muy completo llamado Cloud9. Con este IDE en la nube podremos trabajar codo a codo con nuestros compañeros de manera remota debido a que cada cambio que haga nuestro compañero lo veremos al instante lo que hace que sea un IDE pensado para el teletrabajo. Cloud9 es capaz de compilar y ejecutar nuestros proyectos en la nube y es compatible con numerosos lenguajes, entre los que se encuentran C, C ++, PHP, Ruby, Perl, Python, JavaScript con Node. js y Go." />
+<link rel="canonical" href="http://localhost:8000/Imagen-Docker-Cloud9" />
+<meta property="og:url" content="http://localhost:8000/Imagen-Docker-Cloud9" />
+<meta property="og:site_name" content="c0d3-m4st3r-blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-04-13T00:00:00+02:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Crear contenedor para implementar el IDE de Amazon, Cloud9, en nustro propio servidor" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"c0d3-m4st3r","url":"https://c0d3-m4st3r.github.io"},"dateModified":"2022-04-13T00:00:00+02:00","datePublished":"2022-04-13T00:00:00+02:00","description":"Amazon nos provee de un IDE en la nube muy completo llamado Cloud9. Con este IDE en la nube podremos trabajar codo a codo con nuestros compañeros de manera remota debido a que cada cambio que haga nuestro compañero lo veremos al instante lo que hace que sea un IDE pensado para el teletrabajo. Cloud9 es capaz de compilar y ejecutar nuestros proyectos en la nube y es compatible con numerosos lenguajes, entre los que se encuentran C, C ++, PHP, Ruby, Perl, Python, JavaScript con Node. js y Go.","headline":"Crear contenedor para implementar el IDE de Amazon, Cloud9, en nustro propio servidor","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:8000/Imagen-Docker-Cloud9"},"url":"http://localhost:8000/Imagen-Docker-Cloud9"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body>
+  <div id="wrapper">
+    <header>
+  <div>
+    <a href="/">
+    
+    <h1>c0d3-m4st3r@home:~$</h1>
+    </a>
+    <div class="header-links">
+      <a href="/archive"><h2 class="header-link">Posts</h2></a>
+<a href="/about"><h2 class="header-link">Sobre mí</h2></a>
+    </div>
+  </div>
+</header>
+    <div class="container">
+      <section id="main_content">
+        <article>
+  <h2>Crear contenedor para implementar el IDE de Amazon, Cloud9, en nustro propio servidor</h2>
+  <time datetime="2022-04-13T00:00:00+02:00" class="by-line">13 Apr 2022</time>
+  <p>Amazon nos provee de un IDE en la nube muy completo llamado Cloud9. Con este IDE en la nube podremos trabajar codo a codo con nuestros compañeros de manera remota debido a que cada cambio que haga nuestro compañero lo veremos al instante lo que hace que sea un IDE pensado para el teletrabajo. Cloud9 es capaz de compilar y ejecutar nuestros proyectos en la nube y es compatible con numerosos lenguajes, entre los que se encuentran C, C ++, PHP, Ruby, Perl, Python, JavaScript con Node. js y Go.</p>
+
+<p>Para poder acceder a este entorno de desarrollo, debemos tener una cuenta creada en Amazon Web Services. Una vez tenemos la cuenta creada, iremos al enlace de cloud9 <a href="https://console.aws.amazon.com/cloud9/">https://console.aws.amazon.com/cloud9/</a>.</p>
+
+<p>Aquí tenemos dos opciones, crear una instancia EC2 en amazon web services e instalar Cloud9 en esa instancia o podemos crear nuestro propio servidor en una máquina local, servicios cloud, servicios de hosting, etc. En nuestro servidor instalaremos Cloud9 y se comunicará mediante ssh con los servicios de amazon. Esta última será nuestra opción y sobre la que tratará este post.</p>
+
+<p>Aprenderemos a instalar todas las dependencias necesarias para poder ejecutar Cloud9 en nuestro servidor y que podamos acceder a él mediante la consola Amazon Web Services. Posteriormente crearemos un Dockerfile donde automatizaremos la instalación de dependencias y se creará una imagen lista para funcionar y que podremos utilizar siempre que usemos el mismo enviroment de Cloud9.</p>
+
+<h3 id="inacabado">Inacabado</h3>
+
+</article>
+      </section>
+    </div>
+  </div>
+
+   <footer>
+  <a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
+    <span>
+        <b>c0d3-m4st3r</b>
+    </span>
+    
+    <span>© 2022</span>
+  </a>
+</footer>
+
+  
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'G-MFV8RQ3QXM', 'auto');
+  ga('send', 'pageview');
+</script>
+  
+</body>
+
+</html>
