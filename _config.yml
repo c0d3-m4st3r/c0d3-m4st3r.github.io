@@ -1,0 +1,33 @@
+title: c0d3-m4st3r-blog
+description: "A Jekyll Blog Theme For c0d3-m4st3r"
+author:
+  name: "c0d3-m4st3r"
+  email: "parave97@hotmail.com"
+  url: "https://c0d3-m4st3r.github.io"
+
+baseurl: /
+
+source: .
+destination: ./_site
+permalink: /:title
+paginate: 3
+paginate_path: /page/:num/
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+future: true
+plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-sitemap
+
+# Custom variables
+owner : "c0d3-m4st3r"
+year : "2022"
+google_analytics: "G-MFV8RQ3QXM"
