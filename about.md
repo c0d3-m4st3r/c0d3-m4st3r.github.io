@@ -2,17 +2,21 @@
 layout: page
 title: About
 ---
-## [](#header-2)Who I am?
+## [](#header-2)¿Quién soy?
 
-Hello! I'm **Francisco Ramos Vega**, also known as **c0d3-m4ster**. 
+¡Hola! soy **Francisco Ramos Vega**, también conocido como **c0d3-m4ster**. 
 
-I am a software engineer graduated from the University of Jaen. I am specialized in **SysAdmin** and I'm trying to **learn everyday** about this world.
+Soy Ingeniero de Software 💻 graduado por la Universidad de Jaén. Estoy especializándome en el área de **administrador de sistemas**, **DevSecOps**, y **microservicios**. Soy un chico apasionado por la tecnología y que hace todo lo posible por aprender y actualizarse.
 
-## [](#header-2)What will I post on this blog?
+Puedes contactar conmigo directamente escribiéndome a este email 📫 <parave97@hotmail.com>
 
-I'll try to post about all the new technologies I'm learning. I will also provide tutorials that, apart from serving you, will help me to strengthen concepts.
+## [](#header-2)¿Qué posteo en este blog?
 
-Thanks for the visit. I hope you have learned a lot.
+Intento aprender todos los días algo nuevo sobre este mundillo y este blog me sirve de ayuda para recordar todo lo aprendido y afianzar los conceptos.
 
-### Regards, Francsico Ramos Vega (c0d3-m4st3r).
+Subiré contenido sobre temas actuales del mundillo TI, tutoriales sobre tecnologías que vaya aprendiendo, etc.
+
+Espero que disfrutes el contenido de los posts 🚀 y te sirvan tanto como a mi. 
+
+### Gracias por la visita, Francsico Ramos Vega (c0d3-m4st3r).
 
