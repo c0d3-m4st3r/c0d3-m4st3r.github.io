@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>c0d3-m4st3r-blog</title>
-    <description>A Jekyll Blog Theme For c0d3-m4st3r</description>
+    <description>Blog personal de Francisco Ramos Vega (c0d3-m4st3r)</description>
     <link>http://localhost:8000</link>
     <atom:link href="http://localhost:8000/feed.xml" rel="self" type="application/rss+xml" />
     <author>
@@ -19,9 +19,67 @@
 
 &lt;p&gt;Aquí tenemos dos opciones, crear una instancia EC2 en amazon web services e instalar Cloud9 en esa instancia o podemos crear nuestro propio servidor en una máquina local, servicios cloud, servicios de hosting, etc. En nuestro servidor instalaremos Cloud9 y se comunicará mediante ssh con los servicios de amazon. Esta última será nuestra opción y sobre la que tratará este post.&lt;/p&gt;
 
-&lt;p&gt;Aprenderemos a instalar todas las dependencias necesarias para poder ejecutar Cloud9 en nuestro servidor y que podamos acceder a él mediante la consola Amazon Web Services. Posteriormente crearemos un Dockerfile donde automatizaremos la instalación de dependencias y se creará una imagen lista para funcionar y que podremos utilizar siempre que usemos el mismo enviroment de Cloud9.&lt;/p&gt;
+&lt;p&gt;Aprenderemos a instalar todas las dependencias necesarias para poder ejecutar Cloud9 en nuestro servidor y que podamos acceder a él mediante la consola Amazon Web Services. Para ello crearemos un Dockerfile donde automatizaremos la instalación de dependencias y se creará una imagen lista para funcionar y que podremos utilizar siempre que usemos el mismo enviroment de Cloud9.&lt;/p&gt;
 
-&lt;h3 id=&quot;inacabado&quot;&gt;Inacabado&lt;/h3&gt;
+&lt;p&gt;El Dockerfile es el siguiente y a continuación iremos analizando el por qué de las partes que lo forman:&lt;/p&gt;
+&lt;div class=&quot;language-docker highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; ubuntu&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Establecemos la zona horaria&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;ENV&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; DEBIAN_FRONTEND=&quot;noninteractive&quot; TZ=&quot;Europe/Madrid&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Creamos el usuario cloud9&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;adduser &lt;span class=&quot;nt&quot;&gt;--disabled-password&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--gecos&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt; cloud9
+
+&lt;span class=&quot;c&quot;&gt;#Actualizamos e instalamos dependencias necesarias&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;apt-get update &lt;span class=&quot;nt&quot;&gt;-yq&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt upgrade &lt;span class=&quot;nt&quot;&gt;-yq&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get &lt;span class=&quot;nt&quot;&gt;-yq&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;curl gnupg ca-certificates &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; curl &lt;span class=&quot;nt&quot;&gt;-L&lt;/span&gt; https://deb.nodesource.com/setup_12.x | bash &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get update &lt;span class=&quot;nt&quot;&gt;-yq&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt-get &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-yq&lt;/span&gt; &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;        python3 &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;        python2 &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;        openssh-server &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;        build-essential &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;        locales-all &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;        nodejs 
+
+&lt;span class=&quot;c&quot;&gt;#Configuramos el servidor ssh con la clave privada proporcionada por amazon&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'s/#PubkeyAuthentication yes/PubkeyAuthentication yes/'&lt;/span&gt; /etc/ssh/sshd_config &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; /home/cloud9/.ssh &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /home/cloud9/.ssh/authorized_keys &lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chmod &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;rwx,g&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;rx,o&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;rx /home/cloud9 
+
+&lt;span class=&quot;c&quot;&gt;#Exponemos el puerto 22 para que podamos comunicarnos mediante ssh con la máquina&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;EXPOSE&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; 22/tcp&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#Creamos un script que levante el servidor ssh y un bash para poder interactuar con la máquina, le damos permisos de ejecución&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'#!/bin/bash\nservice ssh start\n/bin/bash'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; /home/cloud9/start.sh
+&lt;span class=&quot;k&quot;&gt;RUN &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chmod&lt;/span&gt; +x /home/cloud9/start.sh
+
+&lt;span class=&quot;c&quot;&gt;#Configuramos para que al entrar a la máquina lo primero que se ejecute sea nuestro script start.sh&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;ENTRYPOINT&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;./home/cloud9/start.sh&quot;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;En primer lugar, he elegido una imagen ubuntu ya que es la que recomienda amazon en su documentación. Después nos encargamos de ajustar la zona horaria, que es necesario para la instalación de node.js (requisito indispensable para que la instancia funcione).&lt;/p&gt;
+
+&lt;p&gt;Una vez hecho esto creamos el usuario que utilizará cloud9 para trabajar. Yo elegí el nombre cloud9 por facilidad nemotécnica pero puedes llamarlo como quieras (siempre que al crear el enviroment de cloud9 en la consola de amazon establezcas el mismo nombre).&lt;/p&gt;
+
+&lt;p&gt;Luego instalamos todas las dependencias necesarias:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Python3 y Python2 (python2 no está en la documentación de amazon como requisito indispensable pero al ejecutar el servicio de Cloud9, este nos lo pide por lo que debe quedar instalado).&lt;/li&gt;
+  &lt;li&gt;openssh-server, esto nos sirve para comunicar nuestra instancia con los servidores de amazon.&lt;/li&gt;
+  &lt;li&gt;build-essential, nos lo pide amazon para poder tener gcc y make.&lt;/li&gt;
+  &lt;li&gt;locales-all, este paquete contiene los datos regionales precompilados de todas las regiones que se pueden elegir.&lt;/li&gt;
+  &lt;li&gt;node.js, muy necesario ya que cloud9 utiliza el motor de node para poder correr en el servidor.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Posteriormente procedemos a configurar el server ssh para establecer la autenticación mediante claves ssh y configurar el archivo authorized_keys para incluir la clave que nos proporciona amazon (linea del echo). Este un paso importante que no he incluido en el Dockerfile (como podreis comprobar paso una cadena vacía al archivo authorized_keys), ya que la clave privada que proporciona amazon en de uso único y privado. Aquí tendreís que crear una instancia de Cloud9 en la Consola de Amazon y en el menu de configuración os aparecerá. Simplemente sustuís la cadena vacía por vuestra clave y os funcionará.&lt;/p&gt;
+
+&lt;p&gt;Una vez hecho esto simplemente compilamos la imagen y ya quedaría listo para hacer el run.&lt;/p&gt;
+
+&lt;p&gt;He de aclarar que no se ha instalado el servicio de amazon ya que al realizar la conexión ssh con éxito automaticamente se instala Cloud9 en nuestro contenedor.&lt;/p&gt;
+
+&lt;p&gt;Ya estaría todo lo que quería comentaros, espero que hayais disfrutado y aprendido un poco más, que es de lo que se trata.&lt;/p&gt;
+
 </description>
         <pubDate>Wed, 13 Apr 2022 00:00:00 +0200</pubDate>
         <link>http://localhost:8000//Imagen-Docker-Cloud9</link>
